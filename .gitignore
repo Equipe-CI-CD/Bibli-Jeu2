@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Base H2 locale et clé API (ne jamais pousser) ###
+data/
+.env
