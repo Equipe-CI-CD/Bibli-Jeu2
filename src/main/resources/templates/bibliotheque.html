@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibli-Jeu - Ma bibliothèque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Bibli-Jeu</h1>
+    <nav>
+        <a th:href="@{/}">Rechercher</a>
+        <a th:href="@{/bibliotheque}">Ma bibliothèque</a>
+    </nav>
+</header>
+
+<main>
+    <section class="carte">
+        <h2>Ma bibliothèque (<span th:text="${jeux.size()}">0</span> jeu(x))</h2>
+
+        <p class="message" th:if="${message}" th:text="${message}">Message</p>
+
+        <p th:if="${jeux.isEmpty()}">
+            Ta bibliothèque est vide. <a th:href="@{/}">Recherche un jeu</a> pour commencer.
+        </p>
+    </section>
+
+    <div class="grille">
+        <div class="carte jeu" th:each="jeu : ${jeux}">
+            <img th:if="${jeu.imageUrl}" th:src="${jeu.imageUrl}" th:alt="${jeu.nom}">
+            <div th:unless="${jeu.imageUrl}" class="sans-image">Pas d'image</div>
+
+            <h2 th:text="${jeu.nom}">Titre du jeu</h2>
+            <table>
+                <tr>
+                    <th>Sortie</th>
+                    <td th:text="${jeu.dateSortie != null} ? ${jeu.dateSortie} : 'inconnue'">2017-03-03</td>
+                </tr>
+                <tr>
+                    <th>Note</th>
+                    <td th:text="${jeu.note != null} ? ${jeu.note} + ' / 5' : '-'">4.5 / 5</td>
+                </tr>
+            </table>
+
+            <p class="info">
+                Ajouté le <span th:text="${#temporals.format(jeu.dateAjout, 'dd/MM/yyyy HH:mm')}">01/01/2026 10:00</span>
+            </p>
+
+            <form th:action="@{/bibliotheque/{id}/supprimer(id=${jeu.id})}" method="post"
+                  onsubmit="return confirm('Retirer ce jeu de ta bibliothèque ?');">
+                <button type="submit" class="danger">Supprimer</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

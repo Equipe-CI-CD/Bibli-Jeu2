@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibli-Jeu - Recherche</title>
+    <!-- construction du lien vers src/main/resources/static/css/style.css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Bibli-Jeu</h1>
+    <nav>
+        <a th:href="@{/}">Rechercher</a>
+        <a th:href="@{/bibliotheque}">Ma bibliothèque</a>
+    </nav>
+</header>
+
+<main>
+    <section class="carte">
+        <p>Recherche un jeu vidéo par son nom.</p>
+
+        <!-- Le formulaire envoie GET /?nom=... -->
+        <form th:action="@{/}" method="get">
+            <label for="nom">Nom du jeu :</label>
+            <input type="text" id="nom" name="nom" th:value="${nom}" placeholder="ex : Zelda" required>
+            <button type="submit">Rechercher</button>
+        </form>
+
+        <p class="message" th:if="${message}" th:text="${message}">Message</p>
+        <p class="erreur" th:if="${erreur}" th:text="${erreur}">Erreur</p>
+        <p th:if="${resultats != null and resultats.isEmpty()}">
+            Aucun jeu trouvé pour « <span th:text="${nom}">zelda</span> ».
+        </p>
+    </section>
+
+    <div class="grille" th:if="${resultats != null}">
+        <div class="carte jeu" th:each="jeu : ${resultats}">
+            <img th:if="${jeu.backgroundImage}" th:src="${jeu.backgroundImage}" th:alt="${jeu.name}">
+            <div th:unless="${jeu.backgroundImage}" class="sans-image">Pas d'image</div>
+
+            <h2 th:text="${jeu.name}">Titre du jeu</h2>
+            <table>
+                <tr>
+                    <th>Sortie</th>
+                    <td th:text="${jeu.released != null} ? ${jeu.released} : 'inconnue'">2017-03-03</td>
+                </tr>
+                <tr>
+                    <th>Note</th>
+                    <td th:text="${jeu.rating != null} ? ${jeu.rating} + ' / 5' : '-'">4.5 / 5</td>
+                </tr>
+            </table>
+
+            <p class="info" th:if="${dejaAjoutes.contains(jeu.id)}">Déjà dans ta bibliothèque</p>
+
+
+            <form th:unless="${dejaAjoutes.contains(jeu.id)}"
+                  th:action="@{/bibliotheque/ajouter}" method="post">
+                <input type="hidden" name="rawgId" th:value="${jeu.id}">
+                <input type="hidden" name="nomJeu" th:value="${jeu.name}">
+                <input type="hidden" name="imageUrl" th:value="${jeu.backgroundImage}">
+                <input type="hidden" name="dateSortie" th:value="${jeu.released}">
+                <input type="hidden" name="note" th:value="${jeu.rating}">
+                <!-- pour revenir sur la même recherche après l'ajout -->
+                <input type="hidden" name="nom" th:value="${nom}">
+                <button type="submit">Ajouter à ma bibliothèque</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
