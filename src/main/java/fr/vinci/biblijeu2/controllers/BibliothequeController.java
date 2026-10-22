@@ -25,11 +25,11 @@ public class BibliothequeController {
     @GetMapping
     public String afficher(Model model) {
         model.addAttribute("jeux", bibliothequeService.lister());
-        return "bibliotheque"; // -> templates/bibliotheque.html
+        return "bibliotheque"; // templates/bibliotheque.html
     }
 
-    // Reçoit le formulaire "Ajouter à ma bibliothèque" de la page d'accueil.
-    // POST (et pas GET) car on modifie des données.
+    // Reçoit le formulaire de la page d'accueil.
+    // POST on modifie des données.
     @PostMapping("/ajouter")
     public String ajouter(@RequestParam("rawgId") Long rawgId,
                           @RequestParam("nomJeu") String nomJeu,
@@ -40,13 +40,11 @@ public class BibliothequeController {
                           RedirectAttributes redirectAttributes) {
         boolean ajoute = bibliothequeService.ajouter(rawgId, nomJeu, imageUrl, dateSortie, note);
 
-        // Flash attribute : un message qui survit à UNE redirection, puis disparaît.
         redirectAttributes.addFlashAttribute("message",
                 ajoute ? nomJeu + " a été ajouté à ta bibliothèque."
                         : nomJeu + " est déjà dans ta bibliothèque.");
-        // On revient sur la même recherche : devient /?nom=...
         redirectAttributes.addAttribute("nom", nom);
-        // redirect: évite qu'un F5 renvoie le formulaire une deuxième fois.
+
         return "redirect:/";
     }
 

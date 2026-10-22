@@ -37,6 +37,6 @@ public class HomeController {
                 model.addAttribute("erreur", "Impossible de contacter RAWG : " + e.getMessage());
             }
         }
-        return "index"; // -> templates/index.html
+        return "index"; // templates/index.html
     }
 }
