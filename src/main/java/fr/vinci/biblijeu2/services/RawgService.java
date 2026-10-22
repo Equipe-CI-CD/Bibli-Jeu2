@@ -10,7 +10,6 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
-// Le seul endroit de l'appli qui parle à l'API RAWG.
 @Service
 public class RawgService {
 
@@ -19,12 +18,9 @@ public class RawgService {
     private final RestClient restClient;
     private final String cleApi;
 
-    // @Value lit les propriétés de application.properties.
-    // rawg.api.cle vaut ${RAWG_API_KEY:} : la clé vient de la variable d'environnement,
-    // elle n'est donc jamais écrite dans le code poussé sur GitHub.
     public RawgService(@Value("${rawg.api.url}") String urlApi,
                        @Value("${rawg.api.cle}") String cleApi) {
-        // RestClient = le client HTTP de Spring. Toutes les requêtes partiront de urlApi.
+
         this.restClient = RestClient.create(urlApi);
         this.cleApi = cleApi;
     }
