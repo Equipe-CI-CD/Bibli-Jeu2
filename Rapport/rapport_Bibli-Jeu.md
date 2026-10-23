@@ -43,3 +43,12 @@ J'ai mis en place le dépôt GitHub et codé les deux fonctionnalités principal
 - **Fonction bibliothèque** : ajout d'un jeu depuis les résultats, affichage de la liste, suppression, et blocage des doublons : un jeu déjà enregistré affiche « Déjà dans ta bibliothèque » dans les résultats au lieu du bouton d'ajout. J'ai aussi fait les deux pages HTML et la feuille de style.
 - **Controllers, Services, Models, Repository** : j'ai écrit ces quatre couches, décrites dans la partie Architecture.
 - **Tests unitaires** : quatre tests JUnit sur le service de bibliothèque (ajout d'un jeu, refus d'un doublon, champ vide enregistré comme vide, suppression). Ils utilisent une base en mémoire pour ne pas toucher aux vraies données. Un cinquième test vérifie que l'application démarre.
+
+## La valeur ajoutée de Yassin
+- J'ai enrichi l'interface et l'expérience utilisateur en implémentant les fonctionnalités suivantes :
+
+- Filtre pour affiner la recherche : ajout de filtres dynamiques combinant les notes des jeux et un tri alphabétique fonctionnel (A-Z / Z-A) sur les résultats de recherche et la bibliothèque.
+
+- Modification du style : refonte complète de la feuille de style pour moderniser l'interface et l'adapter aux pages HTML.
+
+- Genre des jeux : extraction et affichage dynamique des genres de chaque jeu (action, RPG, FPS, etc.) à partir des données de l'API et de la base.
