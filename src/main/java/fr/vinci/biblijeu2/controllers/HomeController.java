@@ -37,10 +37,9 @@ public class HomeController {
                 // Clé API absente.
                 model.addAttribute("erreur", e.getMessage());
             } catch (RestClientException e) {
-                // RAWG injoignable, clé invalide...
-                // Sécurité : le message de l'exception contient l'URL appelée, donc la clé API.
-                // On ne l'affiche jamais : message générique pour l'utilisateur,
-                // et seulement le type d'erreur dans les logs.
+                // Sécurité : le message de l'exception contient l'URL appelée, donc la clé API visible.
+                // Ne l'affichez jamais : message générique pour l'utilisateur !!!!
+                // Et seulement le type d'erreur dans les logs.
                 log.warn("Échec de l'appel RAWG : {}", e.getClass().getSimpleName());
                 model.addAttribute("erreur", "Impossible de contacter RAWG pour le moment, réessaie plus tard.");
             }
