@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: bibli-jeu
   namespace: bibli-jeu
+  annotations:
+    demo.gitops/version: "v2"
 spec:
   replicas: 1
   strategy:
