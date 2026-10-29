@@ -47,7 +47,7 @@ jobs:
           exit-code: '0'
           severity: 'CRITICAL,HIGH'
 
-  # 3. PUBLICATION DE L'IMAGE DOCKER
+# 3. PUBLICATION DE L'IMAGE DOCKER
   docker-build-push:
     needs: security-scan
     runs-on: ubuntu-latest
@@ -66,11 +66,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build et Push de l'image Docker avec le Commit SHA
+      - name: Build et Push de l'image Docker
         run: |
-          # Conversion du nom du propriétaire/repo en minuscules pour Docker
-          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_NAME="ghcr.io/${REPO_OWNER}/bibli-jeu2-backend:${{ github.sha }}"
-          
-          docker build -t $IMAGE_NAME .
-          docker push $IMAGE_NAME
+          docker build -t ghcr.io/equipe-ci-cd/bibli-jeu2-backend:${{ github.sha }} .
+          docker push ghcr.io/equipe-ci-cd/bibli-jeu2-backend:${{ github.sha }}
