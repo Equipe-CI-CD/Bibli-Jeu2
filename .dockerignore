@@ -3,7 +3,8 @@
 .idea
 .vscode
 target
-data // cette base ne dois jamais être dans l'image
+# La base data ne dois jamais être dans l'image
+data
 k8s
 Rapport
 *.log
