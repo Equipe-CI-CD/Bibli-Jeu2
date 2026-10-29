@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: bibli-jeu
-          image: ghcr.io/equipe-ci-cd/bibli-jeu2-backend:3a1b0f5a0b1c94fd3dd524aae1767b9e7d6c88d1
+          image: ghcr.io/equipe-ci-cd/bibli-jeu2-backend:8b6362619f9c0d55dcc52e79bbee042921579d89
           ports:
             - containerPort: 8080
           env:
