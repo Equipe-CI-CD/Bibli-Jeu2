@@ -2,6 +2,8 @@ package fr.vinci.biblijeu2.controllers;
 
 import fr.vinci.biblijeu2.services.BibliothequeService;
 import fr.vinci.biblijeu2.services.RawgService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.client.RestClientException;
 
 @Controller
 public class HomeController {
+
+    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     private final RawgService rawgService;
     private final BibliothequeService bibliothequeService;
@@ -34,7 +38,11 @@ public class HomeController {
                 model.addAttribute("erreur", e.getMessage());
             } catch (RestClientException e) {
                 // RAWG injoignable, clé invalide...
-                model.addAttribute("erreur", "Impossible de contacter RAWG : " + e.getMessage());
+                // Sécurité : le message de l'exception contient l'URL appelée, donc la clé API.
+                // On ne l'affiche jamais : message générique pour l'utilisateur,
+                // et seulement le type d'erreur dans les logs.
+                log.warn("Échec de l'appel RAWG : {}", e.getClass().getSimpleName());
+                model.addAttribute("erreur", "Impossible de contacter RAWG pour le moment, réessaie plus tard.");
             }
         }
         return "index"; // templates/index.html

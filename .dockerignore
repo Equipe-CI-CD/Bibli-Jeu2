@@ -1,11 +1,13 @@
-
 .git
 .github
 .idea
 .vscode
 target
+data // cette base ne dois jamais être dans l'image
+k8s
+Rapport
 *.log
+*.md
+compose.yaml
 .env
 .env.*
-!.env.example
-Rapport
